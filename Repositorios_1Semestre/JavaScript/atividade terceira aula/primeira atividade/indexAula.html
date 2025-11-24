@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Funcionário e Cálculo do Salário Líquido</title>
+</head>
+<body>
+    <h2>Cadastro de Funcionário</h2>
+
+    <label for="nome">Nome:</label><br>
+    <input type="text" id="nome"><br><br>
+
+    <label for="endereco">Endereço:</label><br>
+    <input type="text" id="endereco"><br><br>
+
+    <label for="sexo">Sexo:</label><br>
+    <select id="sexo">
+        <option value="Masculino">Masculino</option>
+        <option value="Feminino">Feminino</option>
+        <option value="Outro">Outro</option>
+    </select><br><br>
+
+    <label for="cidade">Cidade:</label><br>
+    <input type="text" id="cidade"><br><br>
+
+    <label for="estado">Estado:</label><br>
+    <input type="text" id="estado"><br><br>
+
+    <label for="idade">Idade:</label><br>
+    <input type="number" id="idade"><br><br>
+
+    <label for="salarioBruto">Salário Bruto (R$):</label><br>
+    <input type="number" id="salarioBruto" step="0.01"><br><br>
+
+    <button id="btnCalcular" onclick="calcularSalario()">Calcular Salário Líquido</button>
+
+    <h3>Resultado:</h3>
+    <p id="resultado"></p>
+
+    <script>
+        function calcularSalario() {
+            // Obter valores dos campos
+            let nome = document.getElementById("nome").value;
+            let endereco = document.getElementById("endereco").value;
+            let sexo = document.getElementById("sexo").value;
+            let cidade = document.getElementById("cidade").value;
+            let estado = document.getElementById("estado").value;
+            let idade = document.getElementById("idade").value;
+            let salarioBruto = parseFloat(document.getElementById("salarioBruto").value);
+
+            // Verificar se o salário foi informado corretamente
+            if (isNaN(salarioBruto) || salarioBruto <= 0) {
+                document.getElementById("resultado").textContent = "Por favor, insira um valor válido para o salário bruto.";
+                return;
+            }
+
+            // Cálculo dos descontos
+            let descontoVT = salarioBruto * 0.02;  // Vale Transporte (2%)
+            let descontoVA = salarioBruto * 0.05;  // Vale Alimentação (5%)
+            let descontoPS = salarioBruto * 0.10;  // Plano de Saúde (10%)
+
+            let totalDescontos = descontoVT + descontoVA + descontoPS;
+            let salarioLiquido = salarioBruto - totalDescontos;
+
+            // Exibir resultado formatado
+            document.getElementById("resultado").innerHTML =
+                "<strong>Nome:</strong> " + nome + "<br>" +
+                "<strong>Endereço:</strong> " + endereco + "<br>" +
+                "<strong>Sexo:</strong> " + sexo + "<br>" +
+                "<strong>Cidade:</strong> " + cidade + "<br>" +
+                "<strong>Estado:</strong> " + estado + "<br>" +
+                "<strong>Idade:</strong> " + idade + " anos<br><br>" +
+                "<strong>Salário Bruto:</strong> R$ " + salarioBruto.toFixed(2) + "<br>" +
+                "<strong>Total de Descontos:</strong> R$ " + totalDescontos.toFixed(2) + "<br>" +
+                "<strong>Salário Líquido:</strong> R$ " + salarioLiquido.toFixed(2);
+        }
+    </script>
+</body>
+</html>

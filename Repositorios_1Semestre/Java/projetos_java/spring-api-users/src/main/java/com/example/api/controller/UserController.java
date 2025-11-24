@@ -1,0 +1,29 @@
+package com.example.api.controller;
+
+import com.example.api.model.User;
+import com.example.api.service.UserService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    private final UserService service;
+
+    public UserController(UserService service) {
+        this.service = service;
+    }
+
+    @GetMapping
+    public List<User> listUsers() {
+        return service.findAll();
+    }
+
+    @PostMapping
+    public String addUser(@RequestBody User user) {
+        service.add(user);
+        return "Usuário adicionado!";
+    }
+}
